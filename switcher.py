@@ -19,14 +19,14 @@ def main():
     switcher(confFile)
 
     # Write-to file
-    writeFile(confFile)
+    # writeFile(confFile)
 
 
 # Write-to httpd.conf
 def writeFile(confFile):
-    pass
-
-
+    # Currently needs to be run sudo due to permissions, could subprocess it out I think if nes down the road
+    with open(CONFFILE, 'w') as file:
+        file.writelines(confFile)
 
 # Find and update version in php.ini
 def switcher(confFile):
