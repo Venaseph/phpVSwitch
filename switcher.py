@@ -4,7 +4,7 @@ import os
 import argparse
 
 def main():
-    pass
+    print("test")
 
 if __name__ == "__main__":
     sys.exit(main())
