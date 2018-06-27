@@ -19,29 +19,29 @@ def main():
     switcher(confFile)
 
     # Write-to file
-    # writeFile(confFile)
+    writeFile(confFile)
 
 
 # Write-to httpd.conf
 def writeFile(confFile):
     # Currently needs to be run sudo due to permissions, could subprocess it out I think if nes down the road
     with open(CONFFILE, 'w') as file:
-        file.writelines(confFile)
+        file.writelines(l for l in confFile)
 
 # Find and update version in php.ini
 def switcher(confFile):
-    print("Starting Values")
-    print(confFile[175])
-    print(confFile[176])
+    # print("Starting Values")
+    # print(confFile[175])
+    # print(confFile[176])
     if '#' not in confFile[175]:
         confFile[175] = "#" + confFile[175]
         confFile[176] = confFile[176][1:]
     else:
         confFile[175] = confFile[175][1:]
         confFile[176] = "#" + confFile[176]
-    print("Ending Values")
-    print(confFile[175])
-    print(confFile[176])
+    # print("Ending Values")
+    # print(confFile[175])
+    # print(confFile[176])
 
 
 # Switch to correct directory of file
@@ -56,7 +56,7 @@ def changeDir(dir=CONFDIR):
 def readFile(confFile=CONFFILE):
     try:
         with open(confFile, 'r') as file:
-            file = file.read().splitlines()
+            file = file.readlines()
             return file
     except Exception as ex:
         errorPrint(ex)
