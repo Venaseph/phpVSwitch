@@ -1,6 +1,8 @@
 # !/usr/bin/env python
 import sys
 import os
+import subprocess as sp
+import webbrowser as wb
 
 
 # globalConsts
@@ -11,16 +13,29 @@ CONFFILE = "testhttpd.conf"
 def main():
     #Relocate to correct directory
     changeDir()
-
     # Read in current httpd.conf file
     confFile = readFile()
-
     # Adjust list to reflect correct PHP Version
     switcher(confFile)
-
     # Write-to file
-    writeFile(confFile)
+    writeFile(confFile) 
+    # Restart Apache
+    restartApache()
+    # Open info PHP to confirm
+    openPhpInfo()
 
+
+def openPhpInfo():
+    wb.open_new('http://localhost/info.php')
+
+
+#restarts Apache
+def restartApache():
+    try:
+        sp.check_call("sudo apachectl restart".split())
+        print("Apache Restarted")
+    except Exception as ex:
+        errorPrint(ex)
 
 # Write-to httpd.conf
 def writeFile(confFile):
