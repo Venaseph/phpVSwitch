@@ -1,13 +1,14 @@
 # !/usr/bin/env python
 import sys
 import os
+import time
 import subprocess as sp
 import webbrowser as wb
 
 
 # globalConsts
 CONFDIR = "/etc/apache2/"
-CONFFILE = "testhttpd.conf"
+CONFFILE = "httpd.conf"
 
 
 def main():
@@ -32,7 +33,10 @@ def openPhpInfo():
 #restarts Apache
 def restartApache():
     try:
+        # Restart command, check_call does not always wait long enough on the restart
         sp.check_call("sudo apachectl restart".split())
+        # Added time to offset it
+        time.sleep(2)
         print("Apache Restarted")
     except Exception as ex:
         errorPrint(ex)
@@ -45,18 +49,12 @@ def writeFile(confFile):
 
 # Find and update version in php.ini
 def switcher(confFile):
-    # print("Starting Values")
-    # print(confFile[175])
-    # print(confFile[176])
     if '#' not in confFile[175]:
         confFile[175] = "#" + confFile[175]
         confFile[176] = confFile[176][1:]
     else:
         confFile[175] = confFile[175][1:]
         confFile[176] = "#" + confFile[176]
-    # print("Ending Values")
-    # print(confFile[175])
-    # print(confFile[176])
 
 
 # Switch to correct directory of file
