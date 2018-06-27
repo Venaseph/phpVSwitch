@@ -49,9 +49,11 @@ def writeFile(confFile):
 
 # Find and update version in php.ini
 def switcher(confFile):
+    # Switch to 7
     if '#' not in confFile[175]:
         confFile[175] = "#" + confFile[175]
         confFile[176] = confFile[176][1:]
+    # Switch to 5.6
     else:
         confFile[175] = confFile[175][1:]
         confFile[176] = "#" + confFile[176]
@@ -60,12 +62,13 @@ def switcher(confFile):
 # Switch to correct directory of file
 def changeDir(dir=CONFDIR):
     try:
+        #move to correct dir
         os.chdir(dir)
     except Exception as ex:
         errorPrint(ex)
 
 
-# Read file into Memory
+# Read file into Memory, line by line
 def readFile(confFile=CONFFILE):
     try:
         with open(confFile, 'r') as file:
@@ -78,6 +81,7 @@ def readFile(confFile=CONFFILE):
 # Method to handle excepts
 def errorPrint(ex):
     print("Error: ", ex)
+
 
 if __name__ == "__main__":
     sys.exit(main())
